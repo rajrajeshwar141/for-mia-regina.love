@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Mia Regina 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #ffd6e0, #ffc2d1, #ffb3c6);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #ff4d6d;
+    transform: rotate(45deg);
+    animation: float 8s linear infinite;
+    opacity: 0.6;
+}
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #ff4d6d;
+    border-radius: 50%;
+}
+.heart::before { top: -9px; left: 0; }
+.heart::after { left: -9px; top: 0; }
+
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(45deg); }
+    100% { transform: translateY(-10vh) rotate(45deg); }
+}
+
+.envelope, .letter, .final {
+    background: #fffaf5;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    padding: 30px;
+    width: 500px;
+    max-width: 90%;
+    animation: fadeIn 1.5s ease;
+}
+
+.envelope {
+    cursor: pointer;
+    position: relative;
+}
+
+.stamp {
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, #c9184a, #800f2f);
+    border-radius: 50%;
+    margin: 20px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 20px #ff8fab;
+}
+
+button {
+    background: #ff4d6d;
+    border: none;
+    padding: 12px 30px;
+    margin: 15px;
+    border-radius: 30px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.15);
+    background: #c9184a;
+}
+
+.countdown {
+    font-size: 22px;
+    margin-top: 20px;
+    color: #c9184a;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<iframe width="0" height="0"
+src="https://www.youtube.com/embed/1oMGm9Q0mO8?autoplay=1&loop=1&playlist=1oMGm9Q0mO8"
+frameborder="0"
+allow="autoplay">
+</iframe>
+
+<script>
+/* Floating Hearts */
+for(let i = 0; i < 30; i++){
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+    document.body.appendChild(heart);
+}
+</script>
+
+<div class="envelope" id="envelope" onclick="openLetter()">
+    <h2>💌 A Letter For You 💌</h2>
+    <div class="stamp">OPEN</div>
+</div>
+
+<div class="letter" id="letter" style="display:none;">
+    <h2>To<br>Mia Regina,</h2>
+    <p>
+    Sooooooooooo, baby gurlllllllllll. I won't keep anything vague and say it clearly upfront.<br><br>
+    I would like to ask you out on a date, ik I'm not physically there but that doesn't mean I'm gonna stop asking you on a date and taking you out. So, will you give me some time to love you and look into your eyes like the way we did on our first date?
+    <br><br>
+    Your's Soulfully,<br>
+    ที่รัก
+    </p>
+
+    <button onclick="showFinal()">Yes</button>
+    <button onclick="showFinal()">YES</button>
+</div>
+
+<div class="final" id="final" style="display:none;">
+    <h2>💖 It's a Date 💖</h2>
+    <p>
+    So babe, it's date night again after so many days, won't stretch it too long karon time short. Be ready, I will be waiting to see you.
+    </p>
+
+    <div class="countdown" id="countdown"></div>
+
+    <p>
+    Time: 4:50 AM<br>
+    Venue: anyplace alone and dark.
+    </p>
+</div>
+
+<script>
+function openLetter() {
+    document.getElementById("envelope").style.display = "none";
+    document.getElementById("letter").style.display = "block";
+}
+
+function showFinal() {
+    document.getElementById("letter").style.display = "none";
+    document.getElementById("final").style.display = "block";
+    startCountdown();
+}
+
+/* Countdown to 4:50 AM Sydney Time */
+function startCountdown() {
+    const countdownEl = document.getElementById("countdown");
+
+    function updateCountdown() {
+        const now = new Date();
+
+        // Get Sydney time
+        const sydneyNow = new Date(
+            now.toLocaleString("en-US", { timeZone: "Australia/Sydney" })
+        );
+
+        let target = new Date(sydneyNow);
+        target.setHours(4, 50, 0, 0);
+
+        // If already past 4:50am today, set to tomorrow
+        if (sydneyNow >= target) {
+            target.setDate(target.getDate() + 1);
+        }
+
+        const diff = target - sydneyNow;
+
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        countdownEl.innerHTML =
+            "⏳ Countdown to our Date (Sydney Time):<br>" +
+            hours + "h " + minutes + "m " + seconds + "s 💕";
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+</script>
+
+</body>
+</html>
